@@ -6,7 +6,8 @@ app.controller("myController", function ($scope, toaster) {
   $scope.lastIndex = 5;
   $scope.pages = 3;
   $scope.pgNum = 1;
-
+  $scope.disableDel = false;
+  $scope.instituteErr = false;
   var count = 0;
   var temp = 0;
   $scope.currentNumber = 0;
@@ -54,14 +55,7 @@ app.controller("myController", function ($scope, toaster) {
     $scope.form.$setPristine();
     $scope.form.$setUntouched();
   }
-  var tableRows = 5;
-  $scope.showRows = function (value) {
-    tableRows = value;
-    $scope.startIndex = 0;
-    $scope.lastIndex = value;
-    $scope.pages = Math.round($scope.userList.length / value);
-    updateData();
-  };
+
   function validations() {
     let result = false;
     let flag = 0;
@@ -107,6 +101,11 @@ app.controller("myController", function ($scope, toaster) {
     if ($scope.gender === "male" || $scope.gender === "female") {
       $scope.genderErr = "";
     }
+
+    // if ($scope.form.institute.$untouched) {
+    //   $scope.instituteErr = true;
+    //   console.log($scope.instituteErr);
+    // }
     if (
       flag == 0 &&
       $scope.name &&
@@ -136,7 +135,7 @@ app.controller("myController", function ($scope, toaster) {
     new_user.Address = $scope.address;
     new_user.educationQualification = $scope.educationQualification;
     $scope.startIndex = 0;
-    $scope.lastIndex = tableRows;
+    $scope.lastIndex = $scope.tableRows;
     $scope.pgNum = 1;
 
     return new_user;
@@ -541,15 +540,23 @@ app.controller("myController", function ($scope, toaster) {
       }
     });
   }
-
+  $scope.tableRows = 5;
+  $scope.showRows = function (value) {
+    $scope.tableRows = parseInt(value);
+    $scope.pgNum = 1;
+    $scope.startIndex = 0;
+    $scope.lastIndex = parseInt(value);
+    $scope.pages = Math.ceil($scope.userList.length / value);
+    // console.log(Math.ceil($scope.userList.length / value));
+    updateData();
+  };
   // to go to prev page
   $scope.prev = function () {
     if ($scope.startIndex > 0) {
-      $scope.startIndex = $scope.startIndex - tableRows;
-      console.log($scope.startIndex);
-      $scope.lastIndex = $scope.startIndex + tableRows;
+      $scope.startIndex = $scope.startIndex - $scope.tableRows;
+
+      $scope.lastIndex = $scope.startIndex + $scope.tableRows;
       $scope.pgNum--;
-      console.log($scope.lastIndex);
       updateData();
     }
   };
@@ -557,8 +564,13 @@ app.controller("myController", function ($scope, toaster) {
   // to go to next page
   $scope.next = function () {
     if ($scope.lastIndex < $scope.userList.length) {
-      $scope.startIndex = $scope.startIndex + tableRows;
-      $scope.lastIndex = $scope.lastIndex + tableRows;
+      $scope.startIndex = $scope.startIndex + $scope.tableRows;
+
+      // console.log($scope.startIndex);
+
+      $scope.lastIndex = $scope.lastIndex + $scope.tableRows;
+
+      // console.log($scope.lastIndex);
       $scope.pgNum++;
       updateData();
     }
@@ -621,6 +633,7 @@ app.controller("myController", function ($scope, toaster) {
       0,
       newQualificationRowOb
     );
+    $scope.disableDel = false;
 
     $scope.currentNumber = wantedToAddnext.countRow + 1;
 
@@ -672,8 +685,7 @@ app.controller("myController", function ($scope, toaster) {
     $scope.confirmDel = function () {
       $scope.userList.splice(index, 1);
 
-      userLength--;
-      if (userLength % 5 == 0) {
+      if ($scope.userList.length % $scope.tableRows == 0) {
         $scope.pages--;
       }
       if (userLength == 0) {
@@ -713,8 +725,9 @@ app.controller("myController", function ($scope, toaster) {
 
     $scope.delRow = function (val) {
       $scope.educationQualification.splice(val, 1);
+
       if ($scope.educationQualification.length == 1) {
-        console.log(true);
+        console.log("hello");
         $scope.disableDel = true;
       }
     };
@@ -754,7 +767,7 @@ app.controller("myController", function ($scope, toaster) {
       updateData();
 
       userLength++;
-      if (userLength / tableRows > $scope.pages) {
+      if ($scope.userList.length / $scope.tableRows > $scope.pages) {
         $scope.pages++;
       }
 
