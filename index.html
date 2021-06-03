@@ -68,6 +68,7 @@
         min-width: 600px;
         color: white;
         height: 60px;
+        
       ">
             <div class="container-fluid">
                 <!-- user icon on left   -->
@@ -118,6 +119,23 @@
                     <!--  search box -->
                     <input name="firstname" class="form-control" type="text" ng-model="value" placeholder="Search"
                         style="width: 100%" required />
+                    <!-- <select name="users" class="form-control" style="width: 10%;">
+
+                        <option ng-click="showRows(rows)" ng-init="rows='5'">5</option>
+                        <option ng-click="showRows(10">10</option>
+                        <option ng-click="showRows(15)">15</option>
+                    </select> -->
+                    <div class="dropdown" ng-init="dropdownValue='5'" ng-click="showRows(dropdownValue)">
+                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown"
+                            ng-model="dropdownValue" id="dropdownMenuButton">{{dropdownValue}}</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class=" dropdown-item" ng-click="dropdownValue='5'" href="#">
+                                5</a><br>
+                            <a class="dropdown-item" ng-click="dropdownValue='10'" href="#">
+                                10</a><br>
+                            <a class="dropdown-item" ng-click="dropdownValue='15'" href="#">15</a><br>
+                        </div>
+                    </div>
                 </nav>
                 <!-- <br /> -->
             </div>
@@ -433,7 +451,7 @@
                                                     </td>
                                                     <td>
                                                         <div class="form-group">
-                                                            <button type="button" ng-disabled="$index == currentNumber"
+                                                            <button type="button" ng-disabled="currentNumber == 0"
                                                                 class="fas fa-trash btn btn-danger"
                                                                 ng-click="delFormDegreeRow(Qualification)"></button>
                                                         </div>
@@ -536,7 +554,7 @@
                                                         <!-- button to delete row-->
                                                         <div class="form-group">
                                                             <button type="button" class="fas fa-trash btn btn-danger"
-                                                                ng-disabled="$index == currentNumber || $index==0"
+                                                                ng-disabled="disableDel" ng-init="disableDel=false"
                                                                 ng-click="delRow($index)"></button>
                                                         </div>
                                                     </td>
@@ -680,12 +698,14 @@
                     </div>
                 </div>
             </div> -->
+
         </div>
 
         <!-- FOOTER to be displayed at bottom of screen -->
         <footer class="page-footer bg-light" style="
         margin-top: 80px;
         bottom: 0;
+        left: 0;
         width: 100%;
         border-top: 1px solid black;
       ">

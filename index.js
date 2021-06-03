@@ -54,7 +54,14 @@ app.controller("myController", function ($scope, toaster) {
     $scope.form.$setPristine();
     $scope.form.$setUntouched();
   }
-
+  var tableRows = 5;
+  $scope.showRows = function (value) {
+    tableRows = value;
+    $scope.startIndex = 0;
+    $scope.lastIndex = value;
+    $scope.pages = Math.round($scope.userList.length / value);
+    updateData();
+  };
   function validations() {
     let result = false;
     let flag = 0;
@@ -129,7 +136,7 @@ app.controller("myController", function ($scope, toaster) {
     new_user.Address = $scope.address;
     new_user.educationQualification = $scope.educationQualification;
     $scope.startIndex = 0;
-    $scope.lastIndex = 5;
+    $scope.lastIndex = tableRows;
     $scope.pgNum = 1;
 
     return new_user;
@@ -538,9 +545,11 @@ app.controller("myController", function ($scope, toaster) {
   // to go to prev page
   $scope.prev = function () {
     if ($scope.startIndex > 0) {
-      $scope.startIndex = $scope.startIndex - 5;
-      $scope.lastIndex = $scope.lastIndex - 5;
+      $scope.startIndex = $scope.startIndex - tableRows;
+      console.log($scope.startIndex);
+      $scope.lastIndex = $scope.startIndex + tableRows;
       $scope.pgNum--;
+      console.log($scope.lastIndex);
       updateData();
     }
   };
@@ -548,8 +557,8 @@ app.controller("myController", function ($scope, toaster) {
   // to go to next page
   $scope.next = function () {
     if ($scope.lastIndex < $scope.userList.length) {
-      $scope.startIndex = $scope.startIndex + 5;
-      $scope.lastIndex = $scope.lastIndex + 5;
+      $scope.startIndex = $scope.startIndex + tableRows;
+      $scope.lastIndex = $scope.lastIndex + tableRows;
       $scope.pgNum++;
       updateData();
     }
@@ -704,7 +713,10 @@ app.controller("myController", function ($scope, toaster) {
 
     $scope.delRow = function (val) {
       $scope.educationQualification.splice(val, 1);
-      // $scope.currentNumber = val;
+      if ($scope.educationQualification.length == 1) {
+        console.log(true);
+        $scope.disableDel = true;
+      }
     };
 
     temp = $scope.userList.indexOf(user);
@@ -742,7 +754,7 @@ app.controller("myController", function ($scope, toaster) {
       updateData();
 
       userLength++;
-      if (userLength / 5 > $scope.pages) {
+      if (userLength / tableRows > $scope.pages) {
         $scope.pages++;
       }
 
