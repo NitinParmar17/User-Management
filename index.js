@@ -6,11 +6,27 @@ app.controller("myController", function ($scope, toaster) {
   $scope.lastIndex = 5;
   $scope.pages = 3;
   $scope.pgNum = 1;
+
   $scope.disableDel = false;
-  $scope.instituteErr = false;
+  editEduErrors();
+  eduErrors();
+  function editEduErrors() {
+    $scope.editInstErr = false;
+    $scope.editStartErr = false;
+    $scope.editEndErr = false;
+    $scope.editPercErr = false;
+    $scope.editDegErr = false;
+  }
+  function eduErrors() {
+    $scope.instituteErr = false;
+    $scope.degreeErr = false;
+    $scope.startDateErr = false;
+    $scope.endDateErr = false;
+    $scope.percentageErr = false;
+  }
   var count = 0;
   var temp = 0;
-  $scope.currentNumber = 0;
+
   $scope.educationQualification = [
     {
       degree: "",
@@ -23,7 +39,7 @@ app.controller("myController", function ($scope, toaster) {
     },
   ];
 
-  var empty = angular.copy($scope.educationQualification);
+  // var empty = angular.copy($scope.educationQualification);
   function emptyFields() {
     $scope.name = "";
     $scope.email = "";
@@ -49,13 +65,71 @@ app.controller("myController", function ($scope, toaster) {
     $scope.showUpdate = "";
 
     $scope.showTable1 = true;
+    $scope.disableDel = false;
 
-    $scope.educationQualification = empty;
+    $scope.educationQualification = [
+      {
+        degree: "",
+        inst: "",
+        InstituteStartDate: "",
+        InstituteEndDate: "",
+        percentage: "",
+        delete: false,
+        countRow: count,
+      },
+    ];
 
     $scope.form.$setPristine();
     $scope.form.$setUntouched();
   }
 
+  function eduValidations() {
+    let temp = 0;
+
+    if ($scope.form.institute.$error.required) {
+      $scope.instituteErr = true;
+      temp++;
+      console.log($scope.instituteErr);
+    }
+    if ($scope.form.InstituteStartDate.$error.required) {
+      $scope.startDateErr = true;
+      temp++;
+    }
+    if ($scope.form.InstituteEndDate.$error.required) {
+      $scope.endDateErr = true;
+      temp++;
+    }
+    if ($scope.form.percentage.$error.required) {
+      $scope.percentageErr = true;
+      temp++;
+    }
+    if ($scope.form.dropdownMenuButton.$untouched) {
+      $scope.degreeErr = true;
+      temp++;
+    }
+    if (temp == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  function editEduValidations() {
+    if ($scope.form.institute.$error.required) {
+      $scope.editInstErr = true;
+    }
+    if ($scope.form.startDate.$error.required) {
+      $scope.editStartErr = true;
+    }
+    if ($scope.form.endDate.$error.required) {
+      $scope.editEndErr = true;
+    }
+    if ($scope.form.percentage.$error.required) {
+      $scope.editPercErr = true;
+    }
+    if ($scope.form.dropdownMenuButton.$untouched) {
+      $scope.editDegreeErr = true;
+    }
+  }
   function validations() {
     let result = false;
     let flag = 0;
@@ -102,10 +176,6 @@ app.controller("myController", function ($scope, toaster) {
       $scope.genderErr = "";
     }
 
-    // if ($scope.form.institute.$untouched) {
-    //   $scope.instituteErr = true;
-    //   console.log($scope.instituteErr);
-    // }
     if (
       flag == 0 &&
       $scope.name &&
@@ -575,7 +645,21 @@ app.controller("myController", function ($scope, toaster) {
       updateData();
     }
   };
-
+  $scope.changeDegree = function () {
+    $scope.degreeErr = false;
+  };
+  $scope.changeInst = function () {
+    $scope.instituteErr = false;
+  };
+  $scope.changeStart = function () {
+    $scope.startDateErr = false;
+  };
+  $scope.changeEnd = function () {
+    $scope.endDateErr = false;
+  };
+  $scope.changePerc = function () {
+    $scope.percentageErr = false;
+  };
   $scope.changeName = function () {
     $scope.nameErr = "";
     $scope.nameInvalid = "";
@@ -616,7 +700,7 @@ app.controller("myController", function ($scope, toaster) {
       }
     }
   };
-
+  $scope.currentNumber = 0;
   //add form in education field in form//
   $scope.addFormDegreeRow = function (wantedToAddnext, index) {
     var newQualificationRowOb = {
@@ -635,8 +719,9 @@ app.controller("myController", function ($scope, toaster) {
     );
     $scope.disableDel = false;
 
+    editEduErrors();
     $scope.currentNumber = wantedToAddnext.countRow + 1;
-
+    $scope.instituteErr = false;
     //reset countRow in ascending number//
     var newCount = 0;
     angular.forEach($scope.educationQualification, function (ob) {
@@ -659,6 +744,11 @@ app.controller("myController", function ($scope, toaster) {
           $scope.educationQualification.push(ob);
         }
       });
+      if ($scope.educationQualification.length == 1) {
+        $scope.currentNumber = 0;
+      }
+      eduErrors();
+      // console.log($scope.currentNumber);
     }
   };
 
@@ -699,6 +789,7 @@ app.controller("myController", function ($scope, toaster) {
   };
 
   $scope.editUser = function (user) {
+    editEduErrors();
     $scope.showSave = "";
     $scope.showUpdate = true;
 
@@ -736,7 +827,28 @@ app.controller("myController", function ($scope, toaster) {
 
     // UPDATING THE VALUES
     $scope.updateBtn = function () {
-      if (validations()) {
+      if ($scope.form.institute.$error.required) {
+        $scope.editInstErr = true;
+      }
+      if ($scope.form.startDate.$error.required) {
+        $scope.editStartErr = true;
+      }
+      if ($scope.form.endDate.$error.required) {
+        $scope.editEndErr = true;
+      }
+      if ($scope.form.percentage.$error.required) {
+        $scope.editPercErr = true;
+      }
+      if ($scope.form.dropdownMenuButton.$untouched) {
+        $scope.editDegErr = true;
+      }
+      if (
+        validations() &&
+        $scope.editInstErr == false &&
+        $scope.editStartErr == false &&
+        $scope.editEndErr == false &&
+        $scope.editPercErr == false
+      ) {
         let updateUser = userHandling();
         $scope.userList.splice(temp, 1, updateUser);
 
@@ -760,7 +872,8 @@ app.controller("myController", function ($scope, toaster) {
   $scope.save = function () {
     // console.log(answer);
 
-    if (validations()) {
+    let edu = eduValidations();
+    if (validations() && edu) {
       let addNewUser = userHandling();
       $scope.userList.unshift(addNewUser);
 
@@ -787,10 +900,13 @@ app.controller("myController", function ($scope, toaster) {
 
   $scope.closeBtn = function () {
     emptyFields();
+    eduErrors();
+    editEduErrors();
   };
 
   $scope.addBtn = function () {
     emptyFields();
+    eduErrors();
   };
 
   $scope.showInfo = function (val) {
