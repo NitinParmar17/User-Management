@@ -7,6 +7,32 @@ app.controller("myController", function ($scope, toaster) {
   $scope.pages = 3;
   $scope.pgNum = 1;
 
+  $scope.reverseSort = false;
+
+  $scope.propertyName = "Name";
+  $scope.reverse = false;
+
+  $scope.sortBy = function (propertyName) {
+    if ($scope.reverseSort == false) {
+      $scope.reverseSort = true;
+    } else {
+      $scope.reverseSort = false;
+    }
+    $scope.reverse =
+      $scope.propertyName === propertyName ? !$scope.reverse : false;
+    $scope.propertyName = propertyName;
+  };
+  // $scope.sortOrder = "Name";
+  // $scope.sortData = function (column) {
+  //   if ($scope.reverseSort == true) {
+  //     $scope.sortOrder = column;
+  //     $scope.reverseSort = false;
+  //   } else {
+  //     $scope.sortOrder = -column;
+  //     $scope.reverseSort = true;
+  //   }
+  // };
+
   $scope.disableDel = false;
   editEduErrors();
   eduErrors();
@@ -89,7 +115,7 @@ app.controller("myController", function ($scope, toaster) {
     if ($scope.form.institute.$error.required) {
       $scope.instituteErr = true;
       temp++;
-      console.log($scope.instituteErr);
+      // console.log($scope.instituteErr);
     }
     if ($scope.form.InstituteStartDate.$error.required) {
       $scope.startDateErr = true;
@@ -105,31 +131,31 @@ app.controller("myController", function ($scope, toaster) {
     }
     if ($scope.form.dropdownMenuButton.$untouched) {
       $scope.degreeErr = true;
-      temp++;
     }
+    console.log($scope.dropdownValue);
     if (temp == 0) {
       return true;
     } else {
       return false;
     }
   }
-  function editEduValidations() {
-    if ($scope.form.institute.$error.required) {
-      $scope.editInstErr = true;
-    }
-    if ($scope.form.startDate.$error.required) {
-      $scope.editStartErr = true;
-    }
-    if ($scope.form.endDate.$error.required) {
-      $scope.editEndErr = true;
-    }
-    if ($scope.form.percentage.$error.required) {
-      $scope.editPercErr = true;
-    }
-    if ($scope.form.dropdownMenuButton.$untouched) {
-      $scope.editDegreeErr = true;
-    }
-  }
+  // function editEduValidations() {
+  //   if ($scope.form.institute.$error.required) {
+  //     $scope.editInstErr = true;
+  //   }
+  //   if ($scope.form.startDate.$error.required) {
+  //     $scope.editStartErr = true;
+  //   }
+  //   if ($scope.form.endDate.$error.required) {
+  //     $scope.editEndErr = true;
+  //   }
+  //   if ($scope.form.percentage.$error.required) {
+  //     $scope.editPercErr = true;
+  //   }
+  //   if ($scope.form.dropdownMenuButton.$untouched) {
+  //     $scope.editDegreeErr = true;
+  //   }
+  // }
   function validations() {
     let result = false;
     let flag = 0;
@@ -619,6 +645,7 @@ app.controller("myController", function ($scope, toaster) {
     $scope.pages = Math.ceil($scope.userList.length / value);
     // console.log(Math.ceil($scope.userList.length / value));
     updateData();
+    $scope.sortOrder = "Name";
   };
   // to go to prev page
   $scope.prev = function () {
@@ -855,7 +882,7 @@ app.controller("myController", function ($scope, toaster) {
         updateData();
 
         emptyFields();
-
+        $scope.sortOrder = "Name";
         $("#myModal").modal("hide");
         toaster.pop("success", "Notification", "User Updated Succesfully");
 
@@ -885,7 +912,7 @@ app.controller("myController", function ($scope, toaster) {
       }
 
       emptyFields();
-
+      $scope.sortOrder = "Name";
       $("#myModal").modal("hide");
       toaster.pop("success", "Notification", "User Added Succesfully");
 

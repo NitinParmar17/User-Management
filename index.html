@@ -23,6 +23,23 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 </head>
 <style>
+    .arrow {
+        border: solid black;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 3px;
+    }
+
+    .up {
+        transform: rotate(-135deg);
+        -webkit-transform: rotate(-135deg);
+    }
+
+    .down {
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+    }
+
     .carousel-control-next-icon {
         height: 30px;
         width: 30px;
@@ -428,7 +445,8 @@
                                                                     href="#">PG</a><br>
 
                                                             </div>
-                                                            <div ng-show="$index == currentNumber">
+                                                            <div
+                                                                ng-show="$index == currentNumber && dropdownValue=='Degree'">
                                                                 <p ng-show="degreeErr" class="text-danger">
                                                                     <b>Required</b>
                                                                 </p>
@@ -675,18 +693,46 @@
                     <!-- table hedaing -->
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Image</th>
-                            <th>Age</th>
+                            <th ng-click="sortBy('Name')">
+                                Name
+
+                                <i class="arrow up" ng-show="!reverseSort" style="color: black;"></i>
+
+                                <i class="arrow down" ng-show="reverseSort" style="color: black;"></i>
+
+                            </th>
+
+                            <th ng-click="sortBy('Email')">Email
+
+                                <i class="arrow up" ng-show="!reverseSort" style="color: black;"></i>
+
+                                <i class="arrow down" ng-show="reverseSort" style="color: black;"></i>
+                            </th>
+                            <th ng-click="sortBy('Phone')">Phone
+
+                                <i class="arrow up" ng-show="!reverseSort" style="color: black;"></i>
+
+                                <i class="arrow down" ng-show="reverseSort" style="color: black;"></i>
+                            </th>
+                            <th ng-click="sortBy('Gender')">Gender
+
+                                <i class="arrow up" ng-show="!reverseSort" style="color: black;"></i>
+
+                                <i class="arrow down" ng-show="reverseSort" style="color: black;"></i>
+                            </th>
+                            <th ng-click="sortBy('Age')">Age
+
+                                <i class="arrow up" ng-show="!reverseSort" style="color: black;"></i>
+
+                                <i class="arrow down" ng-show="reverseSort" style="color: black;"></i>
+                            </th>
                             <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <!-- accessing all elements of userList and displaying in table -->
-                        <tr ng-repeat="user in currentData | filter: value">
+                        <tr ng-repeat="user in currentData | filter: value|orderBy:propertyName:reverse">
                             <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{ user.Name }}
                             </td>
                             <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{ user.Email}}
