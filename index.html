@@ -137,52 +137,21 @@
                 <div class="input-group" style="width: 83%;">
                     <input name="firstname" class="form-control" type="text" ng-model="value" placeholder="Search"
                         aria-label="Text input with dropdown button">
-                    <div class="input-group-append" ng-click="showRows(dropdownValue)">
-                        <button class="btn btn-outline-secondary dropdown-toggle" ng-init="dropdownValue=5"
-                            type="button" data-toggle="dropdown" aria-haspopup="true" ng-model="dropdownValue"
-                            aria-expanded="false">No. of Items {{dropdownValue}}</button>
+                    <div class="input-group-append" ng-click="showRows(dropdownVal)">
+                        <button style="background-color: rgb(65, 1, 78); color: white;width: 100px;"
+                            class="btn btn-outline-secondary dropdown-toggle" ng-init="dropdownVal=5" type="button"
+                            data-toggle="dropdown" aria-haspopup="true" ng-model="dropdownVal"
+                            aria-expanded="false">{{dropdownVal}}</button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" type="number" ng-click="dropdownValue='5'" href="#">5</a>
-                            <a class="dropdown-item" ng-click="dropdownValue='10'" href="#">10</a>
-                            <a class="dropdown-item" ng-click="dropdownValue='15'" href="#">15</a>
+                            <a class="dropdown-item" type="number" ng-click="dropdownVal='5'" href="#">5</a>
+                            <a class="dropdown-item" ng-click="dropdownVal='10'" href="#">10</a>
+                            <a class="dropdown-item" ng-click="dropdownVal='15'" href="#">15</a>
 
                         </div>
                     </div>
                 </div>
-                <!-- <input name="firstname" class="form-control" type="text" ng-model="value" placeholder="Search"
-                        style="width: 100%" required /> -->
-                <!-- <select name="users" class="form-control" style="width: 10%;">
-
-                        <option ng-click="showRows(rows)" ng-init="rows='5'">5</option>
-                        <option ng-click="showRows(10">10</option>
-                        <option ng-click="showRows(15)">15</option>
-                    </select> -->
-                <!-- <div class="dropdown" ng-init="dropdownValue='5'" ng-click="showRows(dropdownValue)">
-                    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown"
-                        ng-model="dropdownValue" id="dropdownMenuButton">{{dropdownValue}}</button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class=" dropdown-item" ng-click="dropdownValue='5'" href="#">
-                            5</a><br>
-                        <a class="dropdown-item" ng-click="dropdownValue='10'" href="#">
-                            10</a><br>
-                        <a class="dropdown-item" ng-click="dropdownValue='15'" href="#">15</a><br>
-                    </div>
-                </div> -->
-                <!-- </nav> -->
-                <!-- <br /> -->
-            </div>
-
-            <div style="
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 100%;
-          margin-top: 4px;
-           ">
 
             </div>
-
-
 
             <!-- // INFO MODAL -->
             <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="basicModal"
@@ -695,36 +664,45 @@
                         <tr>
                             <th ng-click="sortBy('Name')">
                                 Name
+                                <span ng-show="nameSort" style="color: gray;">&#8645;</span>
+                                <span ng-show="byName">
+                                    <i class="arrow up" ng-show="!reverseName" style="color: black;"></i>
 
-                                <i class="arrow up" ng-show="!reverseSort" style="color: black;"></i>
-
-                                <i class="arrow down" ng-show="reverseSort" style="color: black;"></i>
-
+                                    <i class="arrow down" ng-show="reverseName" style="color: black;"></i>
+                                    <span>
                             </th>
 
                             <th ng-click="sortBy('Email')">Email
+                                <span ng-show="emailSort" style="color: gray;">&#8645;</span>
+                                <span ng-show="byEmail">
+                                    <i class="arrow up" ng-show="!reverseEmail" style="color: black;"></i>
 
-                                <i class="arrow up" ng-show="!reverseSort" style="color: black;"></i>
-
-                                <i class="arrow down" ng-show="reverseSort" style="color: black;"></i>
+                                    <i class="arrow down" ng-show="reverseEmail" style="color: black;"></i>
+                                </span>
                             </th>
                             <th ng-click="sortBy('Phone')">Phone
+                                <span ng-show="phoneSort" style="color: gray;">&#8645;</span>
+                                <span ng-show="byPhone"> <i class="arrow up" ng-show="!reversePhone"
+                                        style="color: black;"></i>
 
-                                <i class="arrow up" ng-show="!reverseSort" style="color: black;"></i>
-
-                                <i class="arrow down" ng-show="reverseSort" style="color: black;"></i>
+                                    <i class="arrow down" ng-show="reversePhone" style="color: black;"></i>
+                                </span>
                             </th>
                             <th ng-click="sortBy('Gender')">Gender
+                                <span ng-show="genderSort" style="color: gray;">&#8645;</span>
+                                <span ng-show="byGender"> <i class="arrow up" ng-show="!reverseGender"
+                                        style="color: black;"></i>
 
-                                <i class="arrow up" ng-show="!reverseSort" style="color: black;"></i>
-
-                                <i class="arrow down" ng-show="reverseSort" style="color: black;"></i>
+                                    <i class="arrow down" ng-show="reverseGender" style="color: black;"></i>
+                                </span>
                             </th>
                             <th ng-click="sortBy('Age')">Age
+                                <span ng-show="ageSort" style="color: gray;">&#8645;</span>
+                                <span ng-show="byAge"> <i class="arrow up" ng-show="!reverseAge"
+                                        style="color: black;"></i>
 
-                                <i class="arrow up" ng-show="!reverseSort" style="color: black;"></i>
-
-                                <i class="arrow down" ng-show="reverseSort" style="color: black;"></i>
+                                    <i class="arrow down" ng-show="reverseAge" style="color: black;"></i>
+                                </span>
                             </th>
                             <th>Action</th>
                         </tr>
@@ -740,7 +718,8 @@
                             </td>
                             <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{ user.Phone}}
                             </td>
-                            <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{user.Image}}
+                            <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1"><i
+                                    class="fas fa-{{user.Image}}"></i>
                             </td>
                             <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{ user.Age}}</td>
                             <td>
