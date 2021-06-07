@@ -1,36 +1,71 @@
 var app = angular.module("myApp", ["ngAnimate", "toaster"]);
-app.controller("myController", function ($scope, toaster) {
+app.controller("myController", function ($scope, toaster, $filter) {
   // list containing the user data
   $scope.currentData = [];
   $scope.startIndex = 0;
   $scope.lastIndex = 5;
   $scope.pages = 3;
   $scope.pgNum = 1;
-
+  $scope.tableRows = 5;
   $scope.reverseSort = false;
 
-  $scope.propertyName = "Name";
+  // $scope.propertyName = "Name";
   $scope.reverse = false;
-
-  $scope.sortBy = function (propertyName) {
+  $scope.sortBy = function (obj) {
     if ($scope.reverseSort == false) {
       $scope.reverseSort = true;
+      if (obj == "Name") {
+        $scope.userList = $filter("orderBy")($scope.userList, "-Name");
+      }
+      if (obj == "Age") {
+        $scope.userList = $filter("orderBy")($scope.userList, "-Age");
+      }
+      if (obj == "Email") {
+        $scope.userList = $filter("orderBy")($scope.userList, "-Email");
+      }
+      if (obj == "Phone") {
+        $scope.userList = $filter("orderBy")($scope.userList, "-Phone");
+      }
+      if (obj == "Gender") {
+        $scope.userList = $filter("orderBy")($scope.userList, "-Image");
+      }
     } else {
       $scope.reverseSort = false;
+      if (obj == "Name") {
+        $scope.userList = $filter("orderBy")($scope.userList, "Name");
+      }
+      if (obj == "Age") {
+        $scope.userList = $filter("orderBy")($scope.userList, "Age");
+      }
+      if (obj == "Email") {
+        $scope.userList = $filter("orderBy")($scope.userList, "Email");
+      }
+      if (obj == "Phone") {
+        $scope.userList = $filter("orderBy")($scope.userList, "Phone");
+      }
+      if (obj == "Gender") {
+        $scope.userList = $filter("orderBy")($scope.userList, "Image");
+      }
     }
-    $scope.reverse =
-      $scope.propertyName === propertyName ? !$scope.reverse : false;
-    $scope.propertyName = propertyName;
+    $scope.startIndex = 0;
+    $scope.pgNum = 1;
+    $scope.lastIndex = $scope.tableRows;
+    updateData();
   };
-  // $scope.sortOrder = "Name";
-  // $scope.sortData = function (column) {
-  //   if ($scope.reverseSort == true) {
-  //     $scope.sortOrder = column;
-  //     $scope.reverseSort = false;
-  //   } else {
-  //     $scope.sortOrder = -column;
+
+  // $scope.sortBy = function (propertyName) {
+  //   if ($scope.reverseSort == false) {
   //     $scope.reverseSort = true;
+  //   } else {
+  //     $scope.reverseSort = false;
   //   }
+  //   $scope.reverse =
+  //     $scope.propertyName === propertyName ? !$scope.reverse : false;
+  //   $scope.propertyName = propertyName;
+  //   $scope.startIndex = 0;
+  //   $scope.pgNum = 1;
+  //   $scope.lastIndex = $scope.tableRows;
+  //   updateData();
   // };
 
   $scope.disableDel = false;
@@ -225,7 +260,7 @@ app.controller("myController", function ($scope, toaster) {
     new_user.Name = $scope.name;
     new_user.Email = $scope.email;
     new_user.Phone = $scope.phone;
-    new_user.Image = angular.lowercase($scope.gender);
+    new_user.Image = $scope.gender;
     new_user.Age = $scope.correctAge;
     new_user.Dob = $scope.dob;
     new_user.Address = $scope.address;
@@ -243,7 +278,7 @@ app.controller("myController", function ($scope, toaster) {
       Email: "martin@patienbond.com",
       Phone: 1234567890,
       // class for the gender icon
-      Image: "male",
+      Image: "Male",
       Age: 24,
       Dob: "10/10/1999",
       Address: "Delhi",
@@ -268,7 +303,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "Harry",
       Email: "harry@hotmail.com",
       Phone: 4563745678,
-      Image: "male",
+      Image: "Male",
       Age: 22,
       Dob: "11/11/1999",
       Address: "Delhi",
@@ -293,7 +328,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "Pat",
       Email: "pat@hotmail.com",
       Phone: 3435344535,
-      Image: "male",
+      Image: "Male",
       Age: 21,
       Dob: "10/10/1999",
       Address: "Delhi",
@@ -318,7 +353,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "Alex",
       Email: "alex@hotmail.com",
       Phone: 0987654321,
-      Image: "male",
+      Image: "Male",
       Age: 23,
       Dob: "10/10/1999",
       Address: "Delhi",
@@ -343,7 +378,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "Nora Smith",
       Email: "nora@hotmail.com",
       Phone: 6754890876,
-      Image: "female",
+      Image: "Female",
       Age: 23,
       Dob: "10/10/1999",
       Address: "Delhi",
@@ -368,7 +403,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "Peter",
       Email: "peter@patienbond.com",
       Phone: 1888267890,
-      Image: "male",
+      Image: "Male",
       Age: 28,
       Dob: "10/10/1999",
       Address: "Delhi",
@@ -393,7 +428,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "Mark",
       Email: "mark@gmail.com",
       Phone: 1122334455,
-      Image: "male",
+      Image: "Male",
       Age: 25,
       Dob: "10/10/1999",
       Address: "Delhi",
@@ -418,7 +453,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "John",
       Email: "john@hotmail.com",
       Phone: 1235344321,
-      Image: "male",
+      Image: "Male",
       Age: 20,
       Dob: "10/10/1999",
       Address: "Delhi",
@@ -443,7 +478,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "Mary",
       Email: "mary@gmail.com",
       Phone: 0987654321,
-      Image: "female",
+      Image: "Female",
       Age: 23,
       Dob: "10/10/1999",
       Address: "Delhi",
@@ -468,7 +503,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "Rahul",
       Email: "rahul@hotmail.com",
       Phone: 6754890888,
-      Image: "male",
+      Image: "Male",
       Age: 25,
       Address: "Delhi",
       Dob: "10/10/1999",
@@ -493,7 +528,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "Bill Gates",
       Email: "bill@patienbond.com",
       Phone: 1111267770,
-      Image: "male",
+      Image: "Male",
       Dob: "10/10/1999",
       Address: "Delhi",
       Age: 65,
@@ -518,7 +553,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "Elon Musk",
       Email: "musk@gmail.com",
       Phone: 1099447755,
-      Image: "male",
+      Image: "Male",
       Dob: "10/10/1999",
       Age: 49,
       Address: "Delhi",
@@ -543,7 +578,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "Sachin",
       Email: "sachin@hotmail.com",
       Phone: 1234987650,
-      Image: "male",
+      Image: "Male",
       Dob: "10/10/1999",
       Age: 45,
       Address: "Delhi",
@@ -568,7 +603,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "Messi",
       Email: "messi@gmail.com",
       Phone: 7888654321,
-      Image: "male",
+      Image: "Male",
       Age: 35,
       Dob: "10/10/1999",
       Address: "Delhi",
@@ -593,7 +628,7 @@ app.controller("myController", function ($scope, toaster) {
       Name: "Ronaldo",
       Email: "ronaldo@hotmail.com",
       Phone: 3334380888,
-      Image: "male",
+      Image: "Male",
       Age: 37,
       Dob: "10/10/1999",
       Address: "Delhi",
@@ -615,7 +650,7 @@ app.controller("myController", function ($scope, toaster) {
       ],
     },
   ];
-
+  $scope.userList = $filter("orderBy")($scope.userList, "Name");
   // taking an empty array to store the data to show on current page
 
   var userLength = $scope.userList.length;
@@ -630,8 +665,10 @@ app.controller("myController", function ($scope, toaster) {
   // updating the data in the currentData array
   function updateData() {
     $scope.currentData = [];
+    console.log($scope.userList);
     angular.forEach($scope.userList, function (val, key) {
       if (key >= $scope.startIndex && key < $scope.lastIndex) {
+        console.log(val);
         $scope.currentData.push(val);
       }
     });

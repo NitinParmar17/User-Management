@@ -732,15 +732,16 @@
 
                     <tbody>
                         <!-- accessing all elements of userList and displaying in table -->
-                        <tr ng-repeat="user in currentData | filter: value|orderBy:propertyName:reverse">
+                        <tr ng-repeat="user in currentData | filter: value">
+                            <!-- <tr ng-repeat="user in currentData | filter: value|orderBy:propertyName:reverse"> -->
                             <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{ user.Name }}
                             </td>
                             <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{ user.Email}}
                             </td>
                             <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{ user.Phone}}
                             </td>
-                            <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-{{user.Image}}"></i></td>
+                            <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{user.Image}}
+                            </td>
                             <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{ user.Age}}</td>
                             <td>
                                 <button class="fas fa-edit btn btn-success" ng-click="editUser(user,$index)"
