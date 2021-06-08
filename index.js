@@ -7,6 +7,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
   $scope.pages = 3;
   $scope.pgNum = 1;
   $scope.tableRows = 5;
+  $scope.editDegErr == false;
   showBy();
   function showBy() {
     $scope.byName = false;
@@ -142,7 +143,6 @@ app.controller("myController", function ($scope, toaster, $filter) {
     },
   ];
 
-  // var empty = angular.copy($scope.educationQualification);
   function emptyFields() {
     $scope.name = "";
     $scope.email = "";
@@ -325,7 +325,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       // class for the gender icon
       Image: "female",
       Age: 24,
-      Dob: "10/08/1999",
+      Dob: "08/10/1999",
       Address: "Delhi",
       educationQualification: [
         {
@@ -375,7 +375,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 3435344535,
       Image: "male",
       Age: 21,
-      Dob: "10/10/1989",
+      Dob: "07/10/1989",
       Address: "Delhi",
       educationQualification: [
         {
@@ -400,7 +400,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 9287654321,
       Image: "male",
       Age: 23,
-      Dob: "10/10/1999",
+      Dob: "03/01/1999",
       Address: "Delhi",
       educationQualification: [
         {
@@ -425,7 +425,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 6754890876,
       Image: "female",
       Age: 23,
-      Dob: "10/10/1999",
+      Dob: "04/10/1999",
       Address: "Delhi",
       educationQualification: [
         {
@@ -450,7 +450,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 1888267890,
       Image: "male",
       Age: 28,
-      Dob: "10/04/1999",
+      Dob: "09/04/1999",
       Address: "Delhi",
       educationQualification: [
         {
@@ -475,7 +475,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 1122334455,
       Image: "male",
       Age: 25,
-      Dob: "10/04/1999",
+      Dob: "11/04/1999",
       Address: "Delhi",
       educationQualification: [
         {
@@ -500,7 +500,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 1235344321,
       Image: "male",
       Age: 20,
-      Dob: "10/01/1999",
+      Dob: "04/01/1999",
       Address: "Delhi",
       educationQualification: [
         {
@@ -525,7 +525,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 9876548321,
       Image: "female",
       Age: 23,
-      Dob: "10/03/1999",
+      Dob: "07/03/1999",
       Address: "Delhi",
       educationQualification: [
         {
@@ -551,7 +551,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Image: "male",
       Age: 25,
       Address: "Delhi",
-      Dob: "10/03/1999",
+      Dob: "05/03/1999",
       educationQualification: [
         {
           Degree: "Graduation",
@@ -599,7 +599,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Email: "musk@gmail.com",
       Phone: 1099447755,
       Image: "male",
-      Dob: "10/08/1999",
+      Dob: "09/08/1999",
       Age: 49,
       Address: "Delhi",
       educationQualification: [
@@ -624,7 +624,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Email: "sachin@hotmail.com",
       Phone: 1234987650,
       Image: "male",
-      Dob: "10/09/1999",
+      Dob: "02/09/1999",
       Age: 45,
       Address: "Delhi",
       educationQualification: [
@@ -650,7 +650,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 7888654321,
       Image: "male",
       Age: 35,
-      Dob: "10/11/1999",
+      Dob: "05/11/1999",
       Address: "Delhi",
       educationQualification: [
         {
@@ -675,7 +675,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 3334380888,
       Image: "male",
       Age: 37,
-      Dob: "10/07/1999",
+      Dob: "04/07/1999",
       Address: "Delhi",
       educationQualification: [
         {
@@ -698,7 +698,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
   $scope.userList = $filter("orderBy")($scope.userList, "Name");
   // console.log($scope.userList);
   // taking an empty array to store the data to show on current page
-  barChart();
+  charts();
   var userLength = $scope.userList.length;
 
   // angular.forEach($scope.userList, function (val, key) {
@@ -711,7 +711,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
   // updating the data in the currentData array
   function updateData() {
     $scope.currentData = [];
-    console.log($scope.userList);
+    // console.log($scope.userList);
     angular.forEach($scope.userList, function (val, key) {
       if (key >= $scope.startIndex && key < $scope.lastIndex) {
         // console.log(key);
@@ -754,6 +754,21 @@ app.controller("myController", function ($scope, toaster, $filter) {
       $scope.pgNum++;
       updateData();
     }
+  };
+  $scope.changeInstErr = function () {
+    $scope.editInstErr = false;
+  };
+  $scope.changeStartErr = function () {
+    $scope.editStartErr = false;
+  };
+  $scope.changeEndErr = function () {
+    $scope.editEndErr = false;
+  };
+  $scope.changePercErr = function () {
+    $scope.editPercErr = false;
+  };
+  $scope.changeDegErr = function () {
+    $scope.editDegErr = false;
   };
   $scope.changeDegree = function () {
     $scope.degreeErr = false;
@@ -829,6 +844,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
     );
     $scope.disableDel = false;
 
+    $scope.degreeErr = false;
     editEduErrors();
     $scope.currentNumber = wantedToAddnext.countRow + 1;
     $scope.instituteErr = false;
@@ -953,18 +969,27 @@ app.controller("myController", function ($scope, toaster, $filter) {
       if ($scope.form.dropdownMenuButton.$untouched) {
         $scope.editDegErr = true;
       }
+      // console.log($scope.editInstErr);
+
+      // console.log($scope.editStartErr);
+
+      // console.log($scope.editEndErr);
+
+      // console.log($scope.editPercErr);
+      // console.log($scope.editDegErr);
       if (
         validations() &&
         $scope.editInstErr == false &&
         $scope.editStartErr == false &&
         $scope.editEndErr == false &&
-        $scope.editPercErr == false
+        $scope.editPercErr == false &&
+        $scope.dropdownValue != "Degree"
       ) {
         let updateUser = userHandling();
         $scope.userList.splice(temp, 1, updateUser);
 
         updateData();
-        barChart();
+        charts();
         emptyFields();
         $scope.sortOrder = "Name";
         $("#myModal").modal("hide");
@@ -989,7 +1014,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       $scope.userList.unshift(addNewUser);
 
       updateData();
-      barChart();
+      charts();
       userLength++;
       if ($scope.userList.length / $scope.tableRows > $scope.pages) {
         $scope.pages++;
@@ -1025,7 +1050,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
     $scope.selectedUser = val;
   };
 
-  function barChart() {
+  function charts() {
     $scope.labels = [
       "Jan",
       "Feb",
@@ -1043,88 +1068,103 @@ app.controller("myController", function ($scope, toaster, $filter) {
 
     var monthList = [
       {
-        Jan: [{ Male: 0, Female: 0 }],
-        Feb: [{ Male: 0, Female: 0 }],
-        Mar: [{ Male: 0, Female: 0 }],
-        Apr: [{ Male: 0, Female: 0 }],
-        May: [{ Male: 0, Female: 0 }],
-        Jun: [{ Male: 0, Female: 0 }],
-        Jul: [{ Male: 0, Female: 0 }],
-        Aug: [{ Male: 0, Female: 0 }],
-        Sep: [{ Male: 0, Female: 0 }],
-        Oct: [{ Male: 0, Female: 0 }],
-        Nov: [{ Male: 0, Female: 0 }],
-        Dec: [{ Male: 0, Female: 0 }],
+        Jan: [{ Male: 0, Female: 0, Tot: 0 }],
+        Feb: [{ Male: 0, Female: 0, Tot: 0 }],
+        Mar: [{ Male: 0, Female: 0, Tot: 0 }],
+        Apr: [{ Male: 0, Female: 0, Tot: 0 }],
+        May: [{ Male: 0, Female: 0, Tot: 0 }],
+        Jun: [{ Male: 0, Female: 0, Tot: 0 }],
+        Jul: [{ Male: 0, Female: 0, Tot: 0 }],
+        Aug: [{ Male: 0, Female: 0, Tot: 0 }],
+        Sep: [{ Male: 0, Female: 0, Tot: 0 }],
+        Oct: [{ Male: 0, Female: 0, Tot: 0 }],
+        Nov: [{ Male: 0, Female: 0, Tot: 0 }],
+        Dec: [{ Male: 0, Female: 0, Tot: 0 }],
       },
     ];
-    $scope.series = ["Male", "Female"];
+    $scope.series = ["Male", "Female", "Total"];
 
     for (let i = 0; i < $scope.userList.length; i++) {
+      // var dateOb = $scope.userList[i].Dob.toString();
+      // console.log(dateOb);
       // var month = parseInt($scope.userList[i].Dob.substring(3, 5));
+
       var mon = new Date($scope.userList[i].Dob);
-      // console.log(mon.getDate());
-      var month = mon.getDate();
+      // console.log(mon.getMonth());
+      var month = mon.getMonth() + 1;
       var gender = $scope.userList[i].Image;
-      // console.log(gender);
+      // console.log(month);
       if (month == 1) {
+        monthList[0].Jan[0].Tot++;
         if (gender == "male") {
           monthList[0].Jan[0].Male++;
         } else monthList[0].Jan[0].Female++;
       }
 
       if (month == 2) {
+        monthList[0].Feb[0].Tot++;
         if (gender == "male") {
           monthList[0].Feb[0].Male++;
         } else monthList[0].Feb[0].Female++;
       }
 
       if (month == 3) {
+        monthList[0].Mar[0].Tot++;
         if (gender == "male") {
           monthList[0].Mar[0].Male++;
         } else monthList[0].Mar[0].Female++;
       }
 
       if (month == 4) {
+        monthList[0].Apr[0].Tot++;
         if (gender == "male") {
           monthList[0].Apr[0].Male++;
         } else monthList[0].Apr[0].Female++;
       }
       if (month == 5) {
+        monthList[0].May[0].Tot++;
         if (gender == "male") {
           monthList[0].May[0].Male++;
         } else monthList[0].May[0].Female++;
       }
       if (month == 6) {
+        monthList[0].Jun[0].Tot++;
         if (gender == "male") {
           monthList[0].Jun[0].Male++;
         } else monthList[0].Jun[0].Female++;
       }
       if (month == 7) {
+        monthList[0].Jul[0].Tot++;
         if (gender == "male") {
           monthList[0].Jul[0].Male++;
         } else monthList[0].Jul[0].Female++;
       }
       if (month == 8) {
+        monthList[0].Aug[0].Tot++;
         if (gender == "male") {
           monthList[0].Aug[0].Male++;
         } else monthList[0].Aug[0].Female++;
       }
       if (month == 9) {
+        monthList[0].Sep[0].Tot++;
         if (gender == "male") {
           monthList[0].Sep[0].Male++;
         } else monthList[0].Sep[0].Female++;
       }
       if (month == 10) {
+        monthList[0].Oct[0].Tot++;
         if (gender == "male") {
           monthList[0].Oct[0].Male++;
         } else monthList[0].Oct[0].Female++;
       }
       if (month == 11) {
+        monthList[0].Nov[0].Tot++;
         if (gender == "male") {
           monthList[0].Nov[0].Male++;
         } else monthList[0].Nov[0].Female++;
       }
       if (month == 12) {
+        monthList[0].Dec[0].Tot++;
         if (gender == "male") {
           monthList[0].Dec[0].Male++;
         } else monthList[0].Dec[0].Female++;
@@ -1162,9 +1202,23 @@ app.controller("myController", function ($scope, toaster, $filter) {
         monthList[0].Nov[0].Female,
         monthList[0].Dec[0].Female,
       ],
+      [
+        monthList[0].Jan[0].Tot,
+        monthList[0].Feb[0].Tot,
+        monthList[0].Mar[0].Tot,
+        monthList[0].Apr[0].Tot,
+        monthList[0].May[0].Tot,
+        monthList[0].Jun[0].Tot,
+        monthList[0].Jul[0].Tot,
+        monthList[0].Aug[0].Tot,
+        monthList[0].Sep[0].Tot,
+        monthList[0].Oct[0].Tot,
+        monthList[0].Nov[0].Tot,
+        monthList[0].Dec[0].Tot,
+      ],
     ];
 
-    $scope.ColorBar = ["#0000FF", "#00ff00"];
+    $scope.ColorBar = ["#0000FF", "#00ff00", "#000000"];
     $scope.DataSetOverride = [{ yAxisID: "y-axis-1" }]; //y-axis-1 is the ID defined in scales under options.
 
     $scope.options = {
@@ -1182,6 +1236,50 @@ app.controller("myController", function ($scope, toaster, $filter) {
       },
     };
 
+    $scope.pieChartData = [
+      monthList[0].Jan[0].Tot,
+      monthList[0].Feb[0].Tot,
+      monthList[0].Mar[0].Tot,
+      monthList[0].Apr[0].Tot,
+      monthList[0].May[0].Tot,
+      monthList[0].Jun[0].Tot,
+      monthList[0].Jul[0].Tot,
+      monthList[0].Aug[0].Tot,
+      monthList[0].Sep[0].Tot,
+      monthList[0].Oct[0].Tot,
+      monthList[0].Nov[0].Tot,
+      monthList[0].Dec[0].Tot,
+    ];
+    $scope.colorsPie = [
+      "#90EE90",
+      "#FF6600",
+      "#8080FF",
+      "#0000FF",
+      "#00ff00",
+      "#FF00FF",
+      "#FF0000",
+      "#00FFFF",
+      "#800080",
+      "#FFFF00",
+      "#A52A2A",
+      "#C0C0C0",
+    ];
+    $scope.PieDataSetOverride = [{ yAxisID: "y-axis-1" }]; //y-axis-1 is the ID defined in scales under options.
+
+    $scope.optionsPie = {
+      legend: { display: true },
+      responsive: true, // set to false to remove responsiveness. Default responsive value is true.
+      scales: {
+        yAxes: [
+          {
+            id: "y-axis-1",
+            type: "linear",
+            display: true,
+            position: "left",
+          },
+        ],
+      },
+    };
     // $scope.clickme = function ($event) {
     //   alert("You've clicked upon " + $event[0]._view.label);
     // };

@@ -543,14 +543,15 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class=" dropdown-item"
-                                                                        ng-click="dropdownValue='Graduation'" href="#">
+                                                                        ng-click="dropdownValue='Graduation';changeDegErr()"
+                                                                        href="#">
                                                                         Graduation</a><br>
                                                                     <a class="dropdown-item"
-                                                                        ng-click="dropdownValue='Post Graduation'"
+                                                                        ng-click="dropdownValue='Post Graduation';changeDegErr()"
                                                                         href="#">Post
                                                                         Graduation</a><br>
                                                                     <a class="dropdown-item"
-                                                                        ng-click="dropdownValue='PG'"
+                                                                        ng-click="dropdownValue='PG';changeDegErr()"
                                                                         href="#">PG</a><br>
                                                                 </div>
                                                                 <p ng-show="editDegErr && Qualification.Degree=='Degree'"
@@ -569,7 +570,7 @@
                                                             <input type="text" name="institute" id="institute"
                                                                 ng-model="educationQualification[$index].Institute"
                                                                 class="form-control" required=true style="width:90%;"
-                                                                ng-change="addInstituteName(Qualification,educationQualification[$index].Institute,'institute')">
+                                                                ng-change="addInstituteName(Qualification,educationQualification[$index].Institute,'institute');changeInstErr()">
                                                             <p ng-show="editInstErr && !educationQualification[$index].Institute "
                                                                 class="text-danger">
                                                                 <b>Required</b>
@@ -582,7 +583,7 @@
                                                             <input type="date" class="form-control" name="startDate"
                                                                 ng-model="educationQualification[$index].InstituteStartDate"
                                                                 style="width:90%;" required=true
-                                                                ng-change="addInstituteName(Qualification,educationQualification[$index].InstituteStartDate,'InstituteStartDate')">
+                                                                ng-change="addInstituteName(Qualification,educationQualification[$index].InstituteStartDate,'InstituteStartDate');changeStartErr()">
                                                             <p ng-show="editStartErr && !educationQualification[$index].InstituteStartDate "
                                                                 class="text-danger">
                                                                 <b>Required</b>
@@ -595,7 +596,7 @@
                                                             <input type="date" class="form-control" name="endDate"
                                                                 ng-model="educationQualification[$index].InstituteEndDate"
                                                                 style="width:90%;" required=true
-                                                                ng-change="addInstituteName(Qualification,educationQualification[$index].InstituteEndDate,'InstituteEndDate')">
+                                                                ng-change="addInstituteName(Qualification,educationQualification[$index].InstituteEndDate,'InstituteEndDate');changeEndErr()">
                                                             <p ng-show="editEndErr && !educationQualification[$index].InstituteEndDate "
                                                                 class="text-danger">
                                                                 <b>Required</b>
@@ -610,7 +611,7 @@
                                                                 ng-model="educationQualification[$index].Cgpa"
                                                                 class="form-control" required=true style="width:90%;"
                                                                 pattern="(\d+)+(\.\d+)$|(^[1-9][0-9]?$|^100$)"
-                                                                ng-change="addInstituteName(Qualification,educationQualification[$index].Cgpa,'percentage')">
+                                                                ng-change="addInstituteName(Qualification,educationQualification[$index].Cgpa,'percentage');changePercErr()">
 
                                                             <p ng-show="editPercErr && !educationQualification[$index].Cgpa "
                                                                 class="text-danger">
@@ -766,10 +767,23 @@
                     <h2>Bar Chart For Gender</h2>
                 </div>
             </div>
+
             <div style="margin: 0 20%;">
                 <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series"
                     chart-colors="ColorBar" chart-options="options" chart-click="clickme" chart-hover="hoverme"
                     chart-dataset-override="DataSetOverride"></canvas>
+            </div>
+
+            <div class="row lead" style="margin: 3% 0;">
+                <div class="col-md-12 text-center ">
+                    <h2>Pie Chart For Gender</h2>
+                </div>
+            </div>
+            <div style="margin: 0 20%;">
+                <canvas id="pie" class="chart chart-pie" chart-data="pieChartData" chart-labels="labels"
+                    chart-options="optionsPie" chart-colors="colorsPie" chart-options="optionsPie" chart-click="clickme"
+                    chart-hover="hoverme" chart-dataset-override="PieDataSetOverride">
+                </canvas>
             </div>
             <div class="modal fade" id="confirm">
                 <div class="modal-dialog modal-dialog-centered">
