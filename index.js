@@ -8,6 +8,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
   $scope.pgNum = 1;
   $scope.tableRows = 5;
   $scope.editDegErr == false;
+  $scope.degreeErr = false;
   showBy();
   function showBy() {
     $scope.byName = false;
@@ -15,6 +16,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
     $scope.byPhone = false;
     $scope.byAge = false;
     $scope.byGender = false;
+    $scope.byDob = false;
   }
   sortingBy();
   function sortingBy() {
@@ -23,6 +25,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
     $scope.ageSort = true;
     $scope.emailSort = true;
     $scope.genderSort = true;
+    $scope.dobSort = true;
   }
   $scope.nameSort = false;
   $scope.byName = true;
@@ -59,6 +62,20 @@ app.controller("myController", function ($scope, toaster, $filter) {
       } else {
         $scope.userList = $filter("orderBy")($scope.userList, "Age");
         $scope.reverseAge = false;
+      }
+    }
+    if (obj == "Dob") {
+      sortingBy();
+      showBy();
+      $scope.dobSort = false;
+      $scope.byDob = true;
+
+      if ($scope.reverseDob == false) {
+        $scope.userList = $filter("orderBy")($scope.userList, "-Age");
+        $scope.reverseDob = true;
+      } else {
+        $scope.userList = $filter("orderBy")($scope.userList, "Age");
+        $scope.reverseDob = false;
       }
     }
 
@@ -208,8 +225,8 @@ app.controller("myController", function ($scope, toaster, $filter) {
     }
     if ($scope.form.dropdownMenuButton.$untouched) {
       $scope.degreeErr = true;
-      console.log($scope.degreeErr);
-      console.log($scope.dropdownValue);
+      // console.log($scope.degreeErr);
+      // console.log($scope.dropdownValue);
     }
     // console.log($scope.degreeErr);
     // console.log($scope.dropdownValue);
@@ -324,8 +341,8 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 1234567890,
       // class for the gender icon
       Image: "female",
-      Age: 24,
-      Dob: "08/10/1999",
+      Age: 40,
+      Dob: "08/10/1980",
       Address: "Delhi",
       educationQualification: [
         {
@@ -349,8 +366,8 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Email: "harry@hotmail.com",
       Phone: 4563745678,
       Image: "male",
-      Age: 22,
-      Dob: "11/11/1999",
+      Age: 28,
+      Dob: "11/11/1992",
       Address: "Delhi",
       educationQualification: [
         {
@@ -375,7 +392,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 3435344535,
       Image: "male",
       Age: 21,
-      Dob: "07/10/1989",
+      Dob: "07/10/1999",
       Address: "Delhi",
       educationQualification: [
         {
@@ -399,8 +416,8 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Email: "alex@hotmail.com",
       Phone: 9287654321,
       Image: "male",
-      Age: 23,
-      Dob: "03/01/1999",
+      Age: 32,
+      Dob: "03/01/1988",
       Address: "Delhi",
       educationQualification: [
         {
@@ -424,8 +441,8 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Email: "nora@hotmail.com",
       Phone: 6754890876,
       Image: "female",
-      Age: 23,
-      Dob: "04/10/1999",
+      Age: 50,
+      Dob: "09/10/1970",
       Address: "Delhi",
       educationQualification: [
         {
@@ -449,8 +466,8 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Email: "peter@patienbond.com",
       Phone: 1888267890,
       Image: "male",
-      Age: 28,
-      Dob: "09/04/1999",
+      Age: 26,
+      Dob: "09/04/1995",
       Address: "Delhi",
       educationQualification: [
         {
@@ -474,8 +491,8 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Email: "mark@gmail.com",
       Phone: 1122334455,
       Image: "male",
-      Age: 25,
-      Dob: "11/04/1999",
+      Age: 27,
+      Dob: "11/04/1994",
       Address: "Delhi",
       educationQualification: [
         {
@@ -500,7 +517,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 1235344321,
       Image: "male",
       Age: 20,
-      Dob: "04/01/1999",
+      Dob: "04/01/2001",
       Address: "Delhi",
       educationQualification: [
         {
@@ -524,8 +541,8 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Email: "mary@gmail.com",
       Phone: 9876548321,
       Image: "female",
-      Age: 23,
-      Dob: "07/03/1999",
+      Age: 22,
+      Dob: "07/08/1998",
       Address: "Delhi",
       educationQualification: [
         {
@@ -551,7 +568,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Image: "male",
       Age: 25,
       Address: "Delhi",
-      Dob: "05/03/1999",
+      Dob: "05/03/1996",
       educationQualification: [
         {
           Degree: "Graduation",
@@ -574,7 +591,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Email: "bill@patienbond.com",
       Phone: 1111267770,
       Image: "male",
-      Dob: "10/07/1999",
+      Dob: "10/07/1955",
       Address: "Delhi",
       Age: 65,
       educationQualification: [
@@ -599,7 +616,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Email: "musk@gmail.com",
       Phone: 1099447755,
       Image: "male",
-      Dob: "09/08/1999",
+      Dob: "09/08/1971",
       Age: 49,
       Address: "Delhi",
       educationQualification: [
@@ -624,7 +641,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Email: "sachin@hotmail.com",
       Phone: 1234987650,
       Image: "male",
-      Dob: "02/09/1999",
+      Dob: "02/09/1975",
       Age: 45,
       Address: "Delhi",
       educationQualification: [
@@ -650,7 +667,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 7888654321,
       Image: "male",
       Age: 35,
-      Dob: "05/11/1999",
+      Dob: "05/11/1985",
       Address: "Delhi",
       educationQualification: [
         {
@@ -675,7 +692,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
       Phone: 3334380888,
       Image: "male",
       Age: 37,
-      Dob: "04/07/1999",
+      Dob: "04/07/1983",
       Address: "Delhi",
       educationQualification: [
         {
@@ -1020,6 +1037,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
         $scope.pages++;
       }
 
+      $scope.degreeErr = false;
       emptyFields();
       $scope.sortOrder = "Name";
       $("#myModal").modal("hide");
@@ -1065,7 +1083,20 @@ app.controller("myController", function ($scope, toaster, $filter) {
       "Nov",
       "Dec",
     ];
-
+    $scope.labelsPie = [
+      "Jan: Total Users",
+      "Feb: Total Users",
+      "Mar: Total Users",
+      "Apr: Total Users",
+      "May: Total Users",
+      "June: Total Users",
+      "July: Total Users",
+      "Aug: Total Users",
+      "Sep: Total Users",
+      "Oct: Total Users",
+      "Nov: Total Users",
+      "Dec: Total Users",
+    ];
     var monthList = [
       {
         Jan: [{ Male: 0, Female: 0, Tot: 0 }],
@@ -1085,15 +1116,17 @@ app.controller("myController", function ($scope, toaster, $filter) {
     $scope.series = ["Male", "Female", "Total"];
 
     for (let i = 0; i < $scope.userList.length; i++) {
-      // var dateOb = $scope.userList[i].Dob.toString();
-      // console.log(dateOb);
-      // var month = parseInt($scope.userList[i].Dob.substring(3, 5));
+      // console.log($scope.userList[i]);
 
       var mon = new Date($scope.userList[i].Dob);
-      // console.log(mon.getMonth());
-      var month = mon.getMonth() + 1;
-      var gender = $scope.userList[i].Image;
+      let type = typeof $scope.userList[i].Dob;
+      if (type == "string") {
+        var month = mon.getDate();
+      } else {
+        var month = mon.getMonth() + 1;
+      }
       // console.log(month);
+      var gender = $scope.userList[i].Image;
       if (month == 1) {
         monthList[0].Jan[0].Tot++;
         if (gender == "male") {
@@ -1217,8 +1250,12 @@ app.controller("myController", function ($scope, toaster, $filter) {
         monthList[0].Dec[0].Tot,
       ],
     ];
-
-    $scope.ColorBar = ["#0000FF", "#00ff00", "#000000"];
+    // $scope.ColorBar = ["#0000FF", "#00ff00", "#964B00"];
+    $scope.ColorBar = [
+      { backgroundColor: "#00ff00" },
+      { backgroundColor: "#0000FF" },
+      { backgroundColor: "#800000" },
+    ];
     $scope.DataSetOverride = [{ yAxisID: "y-axis-1" }]; //y-axis-1 is the ID defined in scales under options.
 
     $scope.options = {
@@ -1264,28 +1301,14 @@ app.controller("myController", function ($scope, toaster, $filter) {
       "#A52A2A",
       "#C0C0C0",
     ];
-    $scope.PieDataSetOverride = [{ yAxisID: "y-axis-1" }]; //y-axis-1 is the ID defined in scales under options.
-
+    // $scope.PieDataSetOverride = [{ yAxisID: "y-axis-1" }];
+    //y-axis-1 is the ID defined in scales under options.
+    // $scope.seriesPie = ["Total"];
     $scope.optionsPie = {
-      legend: { display: true },
-      responsive: true, // set to false to remove responsiveness. Default responsive value is true.
-      scales: {
-        yAxes: [
-          {
-            id: "y-axis-1",
-            type: "linear",
-            display: true,
-            position: "left",
-          },
-        ],
+      legend: {
+        display: false,
       },
+      responsive: true, // set to false to remove responsiveness. Default responsive value is true.
     };
-    // $scope.clickme = function ($event) {
-    //   alert("You've clicked upon " + $event[0]._view.label);
-    // };
-
-    // $scope.hoverme = function ($event) {
-    //   alert("You hovered over " + $event[0]._view.label);
-    // };
   }
 });

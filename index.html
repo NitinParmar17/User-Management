@@ -698,6 +698,14 @@
                                     <i class="arrow down" ng-show="reversePhone" style="color: black;"></i>
                                 </span>
                             </th>
+                            <th ng-click="sortBy('Dob')">Dob
+                                <span ng-show="dobSort" style="color: gray;">&#8645;</span>
+                                <span ng-show="byDob"> <i class="arrow up" ng-show="!reverseDob"
+                                        style="color: black;"></i>
+
+                                    <i class="arrow down" ng-show="reverseDob" style="color: black;"></i>
+                                </span>
+                            </th>
                             <th ng-click="sortBy('Gender')">Gender
                                 <span ng-show="genderSort" style="color: gray;">&#8645;</span>
                                 <span ng-show="byGender"> <i class="arrow up" ng-show="!reverseGender"
@@ -706,6 +714,7 @@
                                     <i class="arrow down" ng-show="reverseGender" style="color: black;"></i>
                                 </span>
                             </th>
+
                             <th ng-click="sortBy('Age')">Age
                                 <span ng-show="ageSort" style="color: gray;">&#8645;</span>
                                 <span ng-show="byAge"> <i class="arrow up" ng-show="!reverseAge"
@@ -728,6 +737,8 @@
                             </td>
                             <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{ user.Phone}}
                             </td>
+                            <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{ user.Dob|date:
+                                "dd/MM/yyyy"}}</td>
                             <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1"><i
                                     class="fas fa-{{user.Image}}"></i>
                             </td>
@@ -770,8 +781,7 @@
 
             <div style="margin: 0 20%;">
                 <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series"
-                    chart-colors="ColorBar" chart-options="options" chart-click="clickme" chart-hover="hoverme"
-                    chart-dataset-override="DataSetOverride"></canvas>
+                    chart-colors="ColorBar" chart-options="options" chart-dataset-override="DataSetOverride"></canvas>
             </div>
 
             <div class="row lead" style="margin: 3% 0;">
@@ -780,9 +790,8 @@
                 </div>
             </div>
             <div style="margin: 0 20%;">
-                <canvas id="pie" class="chart chart-pie" chart-data="pieChartData" chart-labels="labels"
-                    chart-options="optionsPie" chart-colors="colorsPie" chart-options="optionsPie" chart-click="clickme"
-                    chart-hover="hoverme" chart-dataset-override="PieDataSetOverride">
+                <canvas id="pie" class="chart chart-pie" chart-data="pieChartData" chart-labels="labelsPie"
+                    chart-colors="colorsPie" chart-options="optionsPie" chart-dataset-override="PieDataSetOverride">
                 </canvas>
             </div>
             <div class="modal fade" id="confirm">
