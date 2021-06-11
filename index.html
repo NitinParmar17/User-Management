@@ -17,16 +17,10 @@
         integrity="sha512-ikQJHkjSbJO2+xpZXCaYVUGUXpz+c8Ip02U8DaQDuLwADRbfkuPh6fyNUjD1zNuPjqj3j6y11iOydnYU8of1bQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.css" rel="stylesheet" />
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script> -->
-    <!-- <script src="https://code.angularjs.org/1.2.0/angular-animate.min.js"></script> -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-    <!-- <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script> -->
-    <!-- <script type="text/javascript" src="path/to/fusioncharts/fusioncharts.js"></script>
-    <script type="text/javascript" src="path/to/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
-    <script type="text/javascript" src="path/to/angularjs-fusioncharts.min.js"></script>
-    <link rel="stylesheet" href="path/to/fusioncharts/themes/fusioncharts.theme.fusion.css" /> -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chart.js/1.0.3/angular-chart.min.js"></script>
 
@@ -238,8 +232,8 @@
                                                 <tr ng-repeat="education in selectedUser.educationQualification">
                                                     <td>{{education.Degree}}</td>
                                                     <td>{{education.Institute}}</td>
-                                                    <td>{{education.StartDate|date: "dd/MM/yyyy"}}</td>
-                                                    <td>{{education.EndDate|date: "dd/MM/yyyy"}}</td>
+                                                    <td>{{education.StartDate|date: "MM/dd/yyyy"}}</td>
+                                                    <td>{{education.EndDate|date: "MM/dd/yyyy"}}</td>
                                                     <td>{{education.Cgpa}}</td>
                                                 </tr>
                                             </table>
@@ -667,9 +661,9 @@
 
             <div class="container" style="margin-top: 10px">
                 <!-- table to display user data -->
-                <table class="table table-bordered table-striped table-hover text-center"
+                <!-- <table class="table table-bordered table-striped table-hover text-center"
                     style="width: 82.5%; font-size: 14px; margin: 0px auto;cursor: pointer;" ng-init="tableRows">
-                    <!-- table hedaing -->
+
                     <thead>
                         <tr>
                             <th ng-click="sortBy('Name')">
@@ -706,12 +700,12 @@
                                     <i class="arrow down" ng-show="reverseDob" style="color: black;"></i>
                                 </span>
                             </th>
-                            <th ng-click="sortBy('Gender')">Gender
-                                <span ng-show="genderSort" style="color: gray;">&#8645;</span>
-                                <span ng-show="byGender"> <i class="arrow up" ng-show="!reverseGender"
+                            <th ng-click="sortBy('Image')">Gender
+                                <span ng-show="imageSort" style="color: gray;">&#8645;</span>
+                                <span ng-show="byImage"> <i class="arrow up" ng-show="!reverseImage"
                                         style="color: black;"></i>
 
-                                    <i class="arrow down" ng-show="reverseGender" style="color: black;"></i>
+                                    <i class="arrow down" ng-show="reverseImage" style="color: black;"></i>
                                 </span>
                             </th>
 
@@ -728,9 +722,7 @@
                     </thead>
 
                     <tbody>
-                        <!-- accessing all elements of userList and displaying in table -->
                         <tr ng-repeat="user in currentData | filter: value">
-                            <!-- <tr ng-repeat="user in currentData | filter: value|orderBy:propertyName:reverse"> -->
                             <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{ user.Name }}
                             </td>
                             <td ng-click="showInfo(user)" data-toggle="modal" data-target="#myModal1">{{ user.Email}}
@@ -751,7 +743,15 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
+
+
+                <!-- TABLE DIRECTIVE -->
+                <my-table data="currentData" del="deleteUser(param)" search="{{value}}" edit="editUser(param)"
+                    list="userList" carousl="showInfo(param)" first="startIndex" last="lastIndex" rows="tableRows"
+                    page="pgNum">
+                </my-table>
+
 
 
                 <!-- Pagination -->
@@ -812,7 +812,8 @@
                         </div>
                         <div class="modal-footer">
                             <div>
-                                <button class="btn btn-success" ng-click=" confirmDel()">Yes</button>
+                                <button class="btn btn-success" data-dismiss="modal"
+                                    ng-click=" confirmDel()">Yes</button>
                                 <button class="btn btn-danger" data-dismiss="modal">No</button>
                             </div>
 

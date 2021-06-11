@@ -1,0 +1,78 @@
+<table class="table table-bordered table-striped table-hover text-center"
+    style="width: 82.5%; font-size: 14px; margin: 0px auto;cursor: pointer;" ng-init="tableRows">
+    <!-- table hedaing -->
+    <thead>
+        <tr>
+            <th ng-click="sortBy('Name')">
+                Name
+                <span ng-show="nameSort" style="color: gray;">&#8645;</span>
+                <span ng-show="byName">
+                    <i class="arrow up" ng-show="!reverseName" style="color: black;"></i>
+
+                    <i class="arrow down" ng-show="reverseName" style="color: black;"></i>
+                    <span>
+            </th>
+
+            <th ng-click="sortBy('Email')">Email
+                <span ng-show="emailSort" style="color: gray;">&#8645;</span>
+                <span ng-show="byEmail">
+                    <i class="arrow up" ng-show="!reverseEmail" style="color: black;"></i>
+
+                    <i class="arrow down" ng-show="reverseEmail" style="color: black;"></i>
+                </span>
+            </th>
+            <th ng-click="sortBy('Phone')">Phone
+                <span ng-show="phoneSort" style="color: gray;">&#8645;</span>
+                <span ng-show="byPhone"> <i class="arrow up" ng-show="!reversePhone" style="color: black;"></i>
+
+                    <i class="arrow down" ng-show="reversePhone" style="color: black;"></i>
+                </span>
+            </th>
+            <th ng-click="sortBy('Dob')">Dob
+                <span ng-show="dobSort" style="color: gray;">&#8645;</span>
+                <span ng-show="byDob"> <i class="arrow up" ng-show="!reverseDob" style="color: black;"></i>
+
+                    <i class="arrow down" ng-show="reverseDob" style="color: black;"></i>
+                </span>
+            </th>
+            <th ng-click="sortBy('Image')">Gender
+                <span ng-show="imageSort" style="color: gray;">&#8645;</span>
+                <span ng-show="byImage"> <i class="arrow up" ng-show="!reverseImage" style="color: black;"></i>
+
+                    <i class="arrow down" ng-show="reverseImage" style="color: black;"></i>
+                </span>
+            </th>
+
+            <th ng-click="sortBy('Age')">Age
+                <span ng-show="ageSort" style="color: gray;">&#8645;</span>
+                <span ng-show="byAge"> <i class="arrow up" ng-show="!reverseAge" style="color: black;"></i>
+
+                    <i class="arrow down" ng-show="reverseAge" style="color: black;"></i>
+                </span>
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="user in data| filter: search">
+            <td ng-click="carousl({param:user})" data-toggle="modal" data-target="#myModal1">{{ user.Name }}
+            </td>
+            <td ng-click="carousl({param:user})" data-toggle="modal" data-target="#myModal1">{{ user.Email}}
+            </td>
+            <td ng-click="carousl({param:user})" data-toggle="modal" data-target="#myModal1">{{ user.Phone}}
+            </td>
+            <td ng-click="carousl({param:user})" data-toggle="modal" data-target="#myModal1">{{ user.Dob|date:
+                "dd/MM/yyyy"}}</td>
+            <td ng-click="carousl({param:user})" data-toggle="modal" data-target="#myModal1"><i
+                    class="fas fa-{{user.Image}}"></i>
+            </td>
+            <td ng-click="carousl({param:user})" data-toggle="modal" data-target="#myModal1">{{ user.Age}}</td>
+            <td>
+                <button class="fas fa-edit btn btn-success" ng-click="edit({param:user})" data-toggle="modal"
+                    data-target="#myModal"> </button>
+                <button class="fas fa-trash btn btn-danger" data-toggle="modal" data-target="#confirm"
+                    ng-click="del({param:$index})"></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
