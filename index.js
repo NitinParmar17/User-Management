@@ -1,4 +1,27 @@
-var app = angular.module("myApp", ["ngAnimate", "toaster", "chart.js"]);
+var app = angular.module("myApp", [
+  "ngAnimate",
+  "toaster",
+  "chart.js",
+  "ngRoute",
+]);
+
+app.config([
+  "$routeProvider",
+  function ($routeProvider) {
+    $routeProvider
+      .when("/Home", {
+        templateUrl: "index.html",
+        controller: "myController",
+      })
+
+      .when("/Profile", {
+        templateUrl: "profiles.html",
+        controller: "myController",
+      })
+
+      .otherwise({ redirectTo: "/Home" });
+  },
+]);
 
 app.directive("myTable", function ($filter) {
   return {
@@ -84,27 +107,67 @@ app.directive("myTable", function ($filter) {
   };
 });
 
-app.controller("myController", function ($scope, toaster, $filter) {
-  // list containing the user data
+app.controller("myController", function ($scope, toaster, $filter, $http) {
+  let display = {};
 
-  // showBy();
-  // function showBy() {
-  //   $scope.byName = false;
-  //   $scope.byEmail = false;
-  //   $scope.byPhone = false;
-  //   $scope.byAge = false;
-  //   $scope.byImage = false;
-  //   $scope.byDob = false;
-  // }
-  // sortingBy();
-  // function sortingBy() {
-  //   $scope.nameSort = true;
-  //   $scope.phoneSort = true;
-  //   $scope.ageSort = true;
-  //   $scope.emailSort = true;
-  //   $scope.imageSort = true;
-  //   $scope.dobSort = true;
-  // }
+  var profile = {
+    start: 0,
+    last: 6,
+    page: 1,
+  };
+
+  $http({
+    method: "GET",
+    url: "https://randomuser.me/api/?page=3&results=10&seed=abc",
+  }).then(
+    function mySuccess(response) {
+      angular.copy(response.data, display);
+      display = display.results;
+
+      updateProfile();
+      function updateProfile() {
+        $scope.currentUser = [];
+        angular.forEach(display, function (val, key) {
+          if (key >= profile.start && key < profile.last) {
+            $scope.currentUser.push(val);
+          }
+        });
+      }
+      // for (let i = 0; i < display.length; i++) {
+      //   if (i >= profile.start && i < profile.last) {
+      //     console.log(display[i]);
+      //     $scope.currentUser.push(display[i]);
+      //   }
+      // }
+
+      $scope.profilePage = profile.page;
+      $scope.totalPages = Math.ceil(display.length / 6);
+
+      $scope.nextPpage = function () {
+        if (profile.last < display.length) {
+          profile.start = profile.last;
+          profile.last += profile.last;
+          $scope.profilePage++;
+          updateProfile();
+        }
+      };
+
+      $scope.prevPpage = function () {
+        if (profile.start > 0) {
+          profile.last = profile.start;
+          profile.start = 0;
+          $scope.profilePage--;
+          updateProfile();
+        }
+      };
+
+      // console.log($scope.display);
+      console.log($scope.currentUser);
+    },
+    function myError(response) {
+      $scope.myWelcome = response.statusText;
+    }
+  );
   onLoading();
   function onLoading() {
     $scope.currentData = [];
@@ -115,33 +178,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
     $scope.tableRows = 5;
     $scope.editDegErr == false;
     $scope.degreeErr = false;
-    // $scope.nameSort = false;
-    // $scope.byName = true;
-
-    // $scope.reverseName = false;
-    // $scope.reverseAge = false;
-    // $scope.reverseEmail = false;
-    // $scope.reversePhone = false;
-    // $scope.reverseGender = false;
   }
-
-  // $scope.sortBy = function (obj) {
-  //   sortingBy();
-  //   showBy();
-
-  //   $scope[obj.toLowerCase() + "Sort"] = false;
-  //   $scope["by" + obj] = true;
-  //   $scope.userList = $filter("orderBy")(
-  //     $scope.userList,
-  //     ($scope["reverse" + obj] ? "" : "-") + obj
-  //   );
-  //   $scope["reverse" + obj] = !$scope["reverse" + obj];
-
-  //   $scope.startIndex = 0;
-  //   $scope.pgNum = 1;
-  //   $scope.lastIndex = $scope.tableRows;
-  //   updateData();
-  // };
 
   $scope.disableDel = false;
   editEduErrors();
@@ -240,34 +277,14 @@ app.controller("myController", function ($scope, toaster, $filter) {
     }
     if ($scope.form.dropdownMenuButton.$untouched) {
       $scope.degreeErr = true;
-      // console.log($scope.degreeErr);
-      // console.log($scope.dropdownValue);
     }
-    // console.log($scope.degreeErr);
-    // console.log($scope.dropdownValue);
     if (temp == 0) {
       return true;
     } else {
       return false;
     }
   }
-  // function editEduValidations() {
-  //   if ($scope.form.institute.$error.required) {
-  //     $scope.editInstErr = true;
-  //   }
-  //   if ($scope.form.startDate.$error.required) {
-  //     $scope.editStartErr = true;
-  //   }
-  //   if ($scope.form.endDate.$error.required) {
-  //     $scope.editEndErr = true;
-  //   }
-  //   if ($scope.form.percentage.$error.required) {
-  //     $scope.editPercErr = true;
-  //   }
-  //   if ($scope.form.dropdownMenuButton.$untouched) {
-  //     $scope.editDegreeErr = true;
-  //   }
-  // }
+
   function validations() {
     let result = false;
     let flag = 0;
@@ -728,19 +745,14 @@ app.controller("myController", function ($scope, toaster, $filter) {
     },
   ];
   $scope.userList = $filter("orderBy")($scope.userList, "Name");
-  // console.log($scope.userList);
   charts();
-  // var userLength = $scope.userList.length;
-  // console.log($filter("orderBy")($scope.userList, "Dob"));
 
   updateData();
   // updating the data in the currentData array
   function updateData() {
     $scope.currentData = [];
-    // console.log($scope.userList);
     angular.forEach($scope.userList, function (val, key) {
       if (key >= $scope.startIndex && key < $scope.lastIndex) {
-        // console.log(key);
         $scope.currentData.push(val);
       }
     });
@@ -753,7 +765,6 @@ app.controller("myController", function ($scope, toaster, $filter) {
     $scope.startIndex = 0;
     $scope.lastIndex = parseInt(value);
     $scope.pages = Math.ceil($scope.userList.length / value);
-    // console.log(Math.ceil($scope.userList.length / value));
     updateData();
     $scope.sortOrder = "Name";
   };
@@ -772,12 +783,7 @@ app.controller("myController", function ($scope, toaster, $filter) {
   $scope.next = function () {
     if ($scope.lastIndex < $scope.userList.length) {
       $scope.startIndex = $scope.startIndex + $scope.tableRows;
-
-      // console.log($scope.startIndex);
-
       $scope.lastIndex = $scope.lastIndex + $scope.tableRows;
-
-      // console.log($scope.lastIndex);
       $scope.pgNum++;
       updateData();
     }
@@ -875,11 +881,9 @@ app.controller("myController", function ($scope, toaster, $filter) {
     editEduErrors();
     $scope.currentNumber = wantedToAddnext.countRow + 1;
     $scope.instituteErr = false;
-    //reset countRow in ascending number//
     var newCount = 0;
     angular.forEach($scope.educationQualification, function (ob) {
       ob.countRow = newCount;
-      // $scope.currentNumber = newCount;
       newCount++;
     });
   };
@@ -901,7 +905,6 @@ app.controller("myController", function ($scope, toaster, $filter) {
         $scope.currentNumber = 0;
       }
       eduErrors();
-      // console.log($scope.currentNumber);
     }
   };
 
@@ -924,8 +927,8 @@ app.controller("myController", function ($scope, toaster, $filter) {
   };
 
   $scope.deleteUser = function (val) {
-    var index = val;
-    console.log(index);
+    var index = $scope.userList.indexOf(val);
+    // console.log(index);
     $scope.confirmDel = function () {
       $scope.userList.splice(index, 1);
 
@@ -1034,8 +1037,6 @@ app.controller("myController", function ($scope, toaster, $filter) {
   };
 
   $scope.save = function () {
-    // console.log(answer);
-
     let edu = eduValidations();
     if (validations() && edu) {
       let addNewUser = userHandling();
@@ -1043,7 +1044,6 @@ app.controller("myController", function ($scope, toaster, $filter) {
 
       updateData();
       charts();
-      // userLength++;
       if ($scope.userList.length / $scope.tableRows > $scope.pages) {
         $scope.pages++;
       }
@@ -1251,4 +1251,6 @@ app.controller("myController", function ($scope, toaster, $filter) {
       responsive: true, // set to false to remove responsiveness. Default responsive value is true.
     };
   }
+
+  console.log($scope.display);
 });

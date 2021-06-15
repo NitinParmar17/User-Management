@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg" style="
+        background-color: rgb(65, 1, 78);
+        width: 100%;
+        min-width: 600px;
+        color: white;
+        height: 60px;
+        
+      ">
+    <div class="container-fluid">
+        <!-- user icon on left   -->
+        <div class="col-2 m-auto icon">
+            <i class="fas fa-user-tag" style="font-size: 1.5rem; text-align: center"></i>
+        </div>
+
+        <div class="col-8">
+            <p style="font-size: 30px; text-align: center; margin: auto">
+                USER PROFILES
+            </p>
+        </div>
+
+        <div class="col-2"></div>
+    </div>
+</nav>
+
+<br />
+<!-- <h1 class="text-center">USER PROFILES</h1> -->
+
+<div class="row" style="margin: 0 5%;">
+
+    <div class="col-4" ng-repeat="user in currentUser">
+        <div class="col-11 card" style="border: solid purple;">
+            <img src="{{user.picture.large}}" style="width:100%; border-radius: 50%;margin-bottom: 10px;">
+            <label><strong>{{user.name.title + ". " + user.name.first + " " + user.name.last}}</strong>{{", " +
+                user.dob.age}}</label>
+            <label>{{user.gender|uppercase}}</label>
+            <label>{{user.email}}</label>
+            <label>{{user.location.city + ", " + user.nat}}</label>
+            <br>
+        </div>
+        <br>
+        <br>
+    </div>
+</div>
+<div class="container mt-2">
+    <ul class="pagination pagination-md justify-content-center">
+        <li class="page-item">
+            <a class="page-link" style="background-color: rgb(65, 1, 78);
+                         color: white;" ng-click="prevPpage()">Previous</a>
+        </li>
+        <li class="page-item active">
+            <a class="page-link"
+                style="background-color: rgb(65, 1, 78);border-color: #fff;">{{profilePage}}/{{totalPages}}</a>
+        </li>
+        <li class="page-item">
+            <button class="page-link" style="background-color: rgb(65, 1, 78);
+                         color: white;" ng-click="nextPpage()">Next</button>
+        </li>
+    </ul>
+</div>
