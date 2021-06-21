@@ -10,7 +10,7 @@ app.config([
   function ($routeProvider) {
     $routeProvider
       .when("/Home", {
-        templateUrl: "index.html",
+        templateUrl: "home.html",
         controller: "myController",
       })
 
